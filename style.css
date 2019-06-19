@@ -176,3 +176,7 @@ display: none;
 .no-decoration-link{
   text-decoration: none;
 }
+
+.like_button{
+  float: right;
+}

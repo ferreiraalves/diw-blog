@@ -9,7 +9,7 @@ var posts = {
       Durante a reunião, Bolsonaro destacou a importância de trabalhar junto com Legislativo e Judiciário, defendeu as instituições e condenou os ataques sofridos pelo Congresso e pelo Supremo nas manifestações do domingo passado, promovidas pelos seus apoiadores.
       `,
       "data_publicacao": '20-5-2019 21:00',
-      "likes": 0,
+      "likes": 2,
 
 
     },
@@ -22,7 +22,7 @@ var posts = {
       A decisão atende pedido do Ministério Público Federal e foi tomada no âmbito do inquérito policial que apura pagamento de vantagens indevidas a Aécio Neves pelo empresário Joesley Batista e pelo Grupo J&F em um futuro governo presidencial, além de influência no governo de Minas Gerais para a restituição de créditos de ICMS em favor do Grupo J&F. A medida ainda atinge outras 13 pessoas e empresas.
       `,
       "data_publicacao": '25-5-2019 21:00',
-      "likes": 0,
+      "likes": 1,
 
 
     },
@@ -35,7 +35,7 @@ var posts = {
       A decisão atende pedido do Ministério Público Federal e foi tomada no âmbito do inquérito policial que apura pagamento de vantagens indevidas a Aécio Neves pelo empresário Joesley Batista e pelo Grupo J&F em um futuro governo presidencial, além de influência no governo de Minas Gerais para a restituição de créditos de ICMS em favor do Grupo J&F. A medida ainda atinge outras 13 pessoas e empresas.
       `,
       "data_publicacao": '30-5-2019 21:00',
-      "likes": 0,
+      "likes": 2,
 
 
     },
@@ -93,7 +93,7 @@ function build_news_page(){
         </a>
         <p class="media-description">${post.texto}</p>
         <p class="media-description">Publicado em: ${post.data_publicacao}</p>
-        <span>class="glyphicon glyphicon-thumbs-up"</span>
+        <button class='like_button' onclick='like_this(${post.id})'> ${post.likes} <span class="glyphicon glyphicon-thumbs-up"></span></button>
         </div>
         </div>
         `);
@@ -113,6 +113,16 @@ function build_news_page(){
       return `${d}-${m}-${y} ${hr}:${min}`
 
     }
+
+    function like_this(id){
+      current_db = get_db();
+      //console.log(id);
+      current_db.posts[id-1].likes++;
+      localStorage.setItem('dbLucasFerreira', JSON.stringify(current_db));
+      location.href = 'index.html';
+
+    }
+
 
     function insertPost(post) {
         // Calcula novo Id a partir do último código existente no array
