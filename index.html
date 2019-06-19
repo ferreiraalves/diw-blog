@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  <meta charset="utf-8">
+  <title>My personal Blog</title>
+</head>
+
+<body>
+
+  <script>
+  /* Toggle between adding and removing the "responsive" class to topnav when the user clicks on the icon */
+  function autoScale() {
+    var x = document.getElementById("myTopnav");
+    if (x.className === "topnav") {
+      x.className += " responsive";
+    } else {
+      x.className = "topnav";sc
+    }
+  }
+  </script>
+
+
+  <div class="topnav" id="myTopnav">
+    <a href="index.html" class="active">Home</a>
+    <a href="index-ajax.html">AJAX News</a>
+    <a href="#contact">Contato</a>
+    <a href="#about">Sobre</a>
+    <a href="novo-post.html">Nova Postagem</a>
+    <a href="javascript:void(0);" class="icon" onclick="autoScale()">
+      <i class="fa fa-bars"></i>
+    </a>
+  </div>
+
+  <div class="container-fluid text-center">
+    <div class="row content diferentao">
+      <div class="col-sm-1 sidenav">
+      </div>
+      <div class="col-sm-10 text-left" id="news-main-block">
+      </div>
+      <div class="col-sm-1 sidenav">
+      </div>
+    </div>
+  </div>
+
+
+</body>
+</html>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script src="script.js"></script>
+<script>
+listarNoticias();
+</script>
