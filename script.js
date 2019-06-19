@@ -1,41 +1,41 @@
-var news = {
-  "news": [
+var posts = {
+  "posts": [
     {
       "id": 1,
       "titulo": "Presidentes dos 3 poderes vão firmar pacto por reformas em 10 de junho",
-      "short_text": "Em encontro nesta terça-feira (28) no Palácio da Alvorada, os presidentes dos três poderes resolveram assinar um pacto a favor das reformas em 10 de junho. O texto foi apresentado durante encontro entre o presidente Jair Bolsonaro e os presidentes da Câmara, Rodrigo Maia, do Senado, Davi Alcolumbre, e do STF, Dias Toffoli.",
-      "image_url": "imgs/lixo.jpg",
-      "full_text": `
+      "imagem": "imgs/lixo.jpg",
+      "texto": `
       Em encontro nesta terça-feira (28) no Palácio da Alvorada, os presidentes dos três poderes resolveram assinar um pacto a favor das reformas em 10 de junho. O texto foi apresentado durante encontro entre o presidente Jair Bolsonaro e os presidentes da Câmara, Rodrigo Maia, do Senado, Davi Alcolumbre, e do STF, Dias Toffoli. <br><br>
       Durante a reunião, Bolsonaro destacou a importância de trabalhar junto com Legislativo e Judiciário, defendeu as instituições e condenou os ataques sofridos pelo Congresso e pelo Supremo nas manifestações do domingo passado, promovidas pelos seus apoiadores.
       `,
-      "published_date": '20-05-2019 21:00'
+      "data_publicacao": '20-5-2019 21:00',
+      "likes": 0,
 
 
     },
     {
       "id": 2,
       "titulo": "Justiça em SP bloqueia R$ 128 milhões de Aécio Neves",
-      "short_text": "Inquérito apura se deputado do PSDB recebeu pagamentos de Joesley Batista.",
-      "image_url": "imgs/lixo2.jpg",
-      "full_text": `
+      "imagem": "imgs/lixo2.jpg",
+      "texto": `
       O juiz João Batista Gonçalves, da 6ª Vara Federal Criminal de São Paulo, determinou o bloqueio imediato de R$ 128 milhões do deputado federal Aécio Neves (PSDB-MG). Defesa entrou com recurso.<br><br>
       A decisão atende pedido do Ministério Público Federal e foi tomada no âmbito do inquérito policial que apura pagamento de vantagens indevidas a Aécio Neves pelo empresário Joesley Batista e pelo Grupo J&F em um futuro governo presidencial, além de influência no governo de Minas Gerais para a restituição de créditos de ICMS em favor do Grupo J&F. A medida ainda atinge outras 13 pessoas e empresas.
       `,
-      "published_date": '25-05-2019 21:00'
+      "data_publicacao": '25-5-2019 21:00',
+      "likes": 0,
 
 
     },
     {
       "id": 3,
       "titulo": "Doria anuncia monotrilho para ligar CPTM ao Aeroporto de Guarulhos",
-      "short_text": "Obra custará R$ 175 milhões e deve ficar pronta em maio de 2021..",
-      "image_url": "imgs/ag05.jpg",
-      "full_text": `
+      "imagem": "imgs/ag05.jpg",
+      "texto": `
       O juiz João Batista Gonçalves, da 6ª Vara Federal Criminal de São Paulo, determinou o bloqueio imediato de R$ 128 milhões do deputado federal Aécio Neves (PSDB-MG). Defesa entrou com recurso.<br><br>
       A decisão atende pedido do Ministério Público Federal e foi tomada no âmbito do inquérito policial que apura pagamento de vantagens indevidas a Aécio Neves pelo empresário Joesley Batista e pelo Grupo J&F em um futuro governo presidencial, além de influência no governo de Minas Gerais para a restituição de créditos de ICMS em favor do Grupo J&F. A medida ainda atinge outras 13 pessoas e empresas.
       `,
-      "published_date": '30-05-2019 21:00'
+      "data_publicacao": '30-5-2019 21:00',
+      "likes": 0,
 
 
     },
@@ -45,11 +45,10 @@ var news = {
 
 // Caso exista no Local Storage, recupera os dados salvos
 function get_db(){
-  // var current_db = JSON.parse(localStorage.getItem('db'));
-  // if (!current_db) {
-  //   current_db = news;
-  // };
-  current_db = news;
+  var current_db = JSON.parse(localStorage.getItem('dbLucasFerreira'));
+  if (!current_db) {
+    current_db = posts;
+  };
   return current_db;
 }
 
@@ -71,34 +70,69 @@ function build_news_page(){
   }
 
 
-  function listarNoticias() {
+  function listarPosts() {
     // Remove todas as linhas do corpo da tabela
     current_db = get_db();
     console.log(current_db);
-    $("#news-main-block").html("");
+    $("#posts-main-block").html("");
     // Popula a tabela com os registros do banco de dados
     var i;
-    for (i = current_db.news.length-1; i >= 0; i--) {
-      noticia = current_db.news[i];
+    for (i = current_db.posts.length-1; i >= 0; i--) {
+      post = current_db.posts[i];
       //parsiona instrumentos
-      $("#news-main-block").append(`
+      $("#posts-main-block").append(`
         <div class="media">
         <div class="media-left">
-        <a href="news.html?id=${noticia.id}">
-        <img class="media-object fixed-size-image" src="${noticia.image_url}" alt="...">
+        <a href="news.html?id=${post.id}">
+        <img class="media-object fixed-size-image" src="${post.imagem}" alt="...">
         </a>
         </div>
         <div class="media-body">
-        <a href="news.html?id=${noticia.id}" style="text-decoration: none;">
-        <h2 class="media-heading">${noticia.titulo}</h2>
+        <a href="news.html?id=${post.id}" style="text-decoration: none;">
+        <h2 class="media-heading">${post.titulo}</h2>
         </a>
-        <p class="media-description">${noticia.short_text}</p>
-        <p class="media-description">Publicado em: ${noticia.published_date}</p>
+        <p class="media-description">${post.texto}</p>
+        <p class="media-description">Publicado em: ${post.data_publicacao}</p>
+        <span>class="glyphicon glyphicon-thumbs-up"</span>
         </div>
         </div>
         `);
         if (i> 0) {
-          $("#news-main-block").append(`<hr>`)
+          $("#posts-main-block").append(`<hr>`)
         }
       }
+    }
+
+    function parseDate(){
+      var now = new Date();
+      d = now.getDate();
+      m = now.getMonth();
+      y = now.getFullYear();
+      hr = now.getDate();
+      min = now.getDate();
+      return `${d}-${m}-${y} ${hr}:${min}`
+
+    }
+
+    function insertPost(post) {
+        // Calcula novo Id a partir do último código existente no array
+        current_db = get_db();
+        var novoId = current_db.posts[current_db.posts.length - 1].id + 1;
+        var now = parseDate();
+
+        var novoPost = {
+          "id": novoId,
+          "titulo": post.titulo,
+          "texto": post.texto,
+          "imagem": post.imagem,
+          "data_publicacao": now,
+          "likes": 0
+
+        };
+
+        // Insere o novo objeto no array
+        current_db.posts.push(novoPost);
+
+        // Atualiza os dados no Local Storage
+        localStorage.setItem('dbLucasFerreira', JSON.stringify(current_db));
     }

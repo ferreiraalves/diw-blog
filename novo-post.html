@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+
+
+  <style>
+  * {
+    box-sizing: border-box;
+  }
+
+  input[type=text], select, textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: vertical;
+  }
+
+  label {
+    padding: 12px 12px 12px 0;
+    display: inline-block;
+  }
+
+  input[type=submit] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    float: right;
+  }
+
+  input[type=submit]:hover {
+    background-color: #45a049;
+  }
+
+  .container {
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    padding: 20px;
+  }
+
+  .col-25 {
+    float: left;
+    width: 25%;
+    margin-top: 6px;
+  }
+
+  .col-75 {
+    float: left;
+    width: 75%;
+    margin-top: 6px;
+  }
+
+  /* Clear floats after the columns */
+  .row:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+
+  /* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
+  @media screen and (max-width: 600px) {
+    .col-25, .col-75, input[type=submit] {
+      width: 100%;
+      margin-top: 0;
+    }
+  }
+  </style>
+</head>
+
+<body>
+  <script>
+  /* Toggle between adding and removing the "responsive" class to topnav when the user clicks on the icon */
+  function autoScale() {
+    var x = document.getElementById("myTopnav");
+    if (x.className === "topnav") {
+      x.className += " responsive";
+    } else {
+      x.className = "topnav";sc
+    }
+  }
+  </script>
+
+
+  <div class="topnav" id="myTopnav">
+    <a href="index.html" class="active">Home</a>
+    <a href="novo-post.html">Nova Postagem</a>
+    <a href="javascript:void(0);" class="icon" onclick="autoScale()">
+      <i class="fa fa-bars"></i>
+    </a>
+  </div>
+
+  <div class="container">
+    <form id="form-contato">
+      <div class="row">
+        <div class="col-25">
+          <label for="fname">Título</label>
+        </div>
+        <div class="col-75">
+          <input type="text" id="inputTitulo" name="Título" placeholder="">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-25">
+          <label for="fname">Texto</label>
+        </div>
+        <div class="col-75">
+          <textarea id="inputTexto" name="Texto" placeholder="" style="height:200px"></textarea>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-25">
+          <label for="fname">Imagem</label>
+        </div>
+        <div class="col-25">
+          <input type="file" id="inputImage" name="Imagem">
+        </div><br>
+        <div class="col-50" id="pic-goes-here">
+        </div>
+      </div>
+      <div class="row">
+        <input type="button" class="btn btn-success" id="btnInsert" value="OK">
+      </form>
+    </div>
+
+
+
+    <script src="script.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script>
+
+
+    let imagemJson = 10;
+
+    function imageHandler(e2) {
+      let store = document.getElementById('pic-goes-here');
+      store.innerHTML = '<img src="' + e2.target.result + '" style=" height: 134px" padding: 10 px>';
+      let jsonstore = e2.target.result;
+      imagemJson = jsonstore;
+    }
+
+    function loadimage(e1) {
+      var filename = e1.target.files[0];
+      var fr = new FileReader();
+      fr.onload = imageHandler;
+      fr.readAsDataURL(filename);
+    }
+
+
+    window.onload = function () {
+      var y = document.getElementById("inputImage");
+      y.addEventListener('change', loadimage, false);
+    }
+
+    $("#btnInsert").click(function () {
+      // Verfica se o formulário está preenchido corretamente
+      if (!$('#form-contato')[0].checkValidity()) {
+        displayMessage("Preencha o formulário corretamente.");
+        return;
+      }
+
+      // Obtem os valores dos campos do formulário
+      let campoTitulo = $("#inputTitulo").val();
+      let campoTexto = $("#inputTexto").val();
+      let campoImagem = document.getElementById("inputImage");
+      post = {
+        "titulo": campoTitulo,
+        "texto": campoTexto,
+        "imagem": imagemJson
+      };
+      //console.log(post);
+      insertPost(post);
+      location.href = 'index.html';
+    });
+    </script>
+
+
+
+
+  </body>
+  </html>
