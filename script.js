@@ -10,6 +10,12 @@ var posts = {
       `,
       "data_publicacao": '20-5-2019 21:00',
       "likes": 2,
+      "comentarios": [
+          {
+              'autor': "Lucas",
+              'texto': "Achei muito bom"
+          },
+      ],
 
 
     },
@@ -23,6 +29,13 @@ var posts = {
       `,
       "data_publicacao": '25-5-2019 21:00',
       "likes": 1,
+      "comentarios": [
+          {
+              'autor': "Lucas",
+              'texto': "Achei muito bom"
+          },
+      ],
+
 
 
     },
@@ -36,6 +49,13 @@ var posts = {
       `,
       "data_publicacao": '30-5-2019 21:00',
       "likes": 2,
+      "comentarios": [
+          {
+              'autor': "Lucas",
+              'texto': "Achei muito bom"
+          },
+      ],
+
 
 
     },
@@ -94,6 +114,7 @@ function build_news_page(){
         <p class="media-description">${post.texto}</p>
         <p class="media-description">Publicado em: ${post.data_publicacao}</p>
         <button class='like_button' onclick='like_this(${post.id})'> ${post.likes} <span class="glyphicon glyphicon-thumbs-up"></span></button>
+        <button class='like_button' onclick='open_comments(${post.id})'> Comentarios </button>
         </div>
         </div>
         `);
@@ -101,6 +122,11 @@ function build_news_page(){
           $("#posts-main-block").append(`<hr>`)
         }
       }
+    }
+
+    function open_comments(is){
+        var modal = document.getElementById("myModal");
+        modal.style.display = "block";
     }
 
     function parseDate(){
@@ -145,4 +171,11 @@ function build_news_page(){
 
         // Atualiza os dados no Local Storage
         localStorage.setItem('dbLucasFerreira', JSON.stringify(current_db));
+    }
+
+    var span = document.getElementsByClassName("close")[0];
+
+    span.onclick = function() {
+        var modal = document.getElementById("myModal");
+        modal.style.display = "none";
     }
