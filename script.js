@@ -15,6 +15,10 @@ var posts = {
               'autor': "Lucas",
               'texto': "Achei muito bom"
           },
+          {
+              'autor': "Geidivan",
+              'texto': "Achei uma merda"
+          },
       ],
 
 
@@ -33,6 +37,10 @@ var posts = {
           {
               'autor': "Lucas",
               'texto': "Achei muito bom"
+          },
+          {
+              'autor': "Geidivan",
+              'texto': "Achei uma merda"
           },
       ],
 
@@ -53,6 +61,10 @@ var posts = {
           {
               'autor': "Lucas",
               'texto': "Achei muito bom"
+          },
+          {
+              'autor': "Geidivan",
+              'texto': "Achei uma merda"
           },
       ],
 
@@ -93,7 +105,6 @@ function build_news_page(){
   function listarPosts() {
     // Remove todas as linhas do corpo da tabela
     current_db = get_db();
-    console.log(current_db);
     $("#posts-main-block").html("");
     // Popula a tabela com os registros do banco de dados
     var i;
@@ -103,14 +114,10 @@ function build_news_page(){
       $("#posts-main-block").append(`
         <div class="media">
         <div class="media-left">
-        <a href="news.html?id=${post.id}">
         <img class="media-object fixed-size-image" src="${post.imagem}" alt="...">
-        </a>
         </div>
         <div class="media-body">
-        <a href="news.html?id=${post.id}" style="text-decoration: none;">
         <h2 class="media-heading">${post.titulo}</h2>
-        </a>
         <p class="media-description">${post.texto}</p>
         <p class="media-description">Publicado em: ${post.data_publicacao}</p>
         <button class='like_button' onclick='like_this(${post.id})'> ${post.likes} <span class="glyphicon glyphicon-thumbs-up"></span></button>
@@ -124,10 +131,73 @@ function build_news_page(){
       }
     }
 
-    function open_comments(is){
+    function new_comment(id) {
+      // Obtem os valores dos campos do formulário
+      let autor = $("#inputCommentAutor").val();
+      let texto = $("#inputCommentTexto").val();
+      comentario = {
+        "autor": autor,
+        "texto": texto,
+
+      };
+      current_db  = get_db();
+      post = current_db.posts[id-1]
+      console.log(post);
+      post.comentarios.push(comentario)
+      console.log(post);
+      localStorage.setItem('dbLucasFerreira', JSON.stringify(current_db));
+      //console.log(post);
+      location.href = 'index.html';
+  }
+
+    function open_comments(id){
         var modal = document.getElementById("myModal");
         modal.style.display = "block";
+        current_db  = get_db();
+        comments = current_db.posts[id-1].comentarios
+        $("#comment_block").html("");
+        $("#comment_block").append(`
+            <span class="close">&times;</span>
+          `);
+        if (comments.length > 0) {
+            for (var i = 0; i < comments.length; i++) {
+                comment = comments[i];
+                $("#comment_block").append(`
+                    <p class="comment_author">${comment.autor}</p>
+                    <p class="comment_text">${comment.texto}</p>
+                  `);
+                  if (i< comments.length-1) {
+                    $("#comment_block").append(`<hr>`)
+                }
+            }
+
+              var span = document.getElementsByClassName("close")[0];
+              span.onclick = function() {
+                  var modal = document.getElementById("myModal");
+                  modal.style.display = "none";
+              }
+        }
+        else {
+            $("#comment_block").append(`
+                <p>Nenhum comentário encontrado</p>
+              `);
+        }
+        $("#comment_block").append(`
+            <form id="form-comment">
+            <label for="fname">Autor</label>
+            <br>
+            <input type="text" id="inputCommentAutor" name="Título" placeholder="">
+            <input type="button" class="btn btn-success" id="btnComment" onclick='new_comment(${id})' value="Novo Comentário">
+            <br>
+            <label for="fname" style="width: 100%;">Texto</label>
+            <br>
+            <textarea id="inputCommentTexto" name="Texto" placeholder="" style="height:100px; width: 100%;"></textarea>
+            </form>
+          `);
+
     }
+
+
 
     function parseDate(){
       var now = new Date();
@@ -162,7 +232,8 @@ function build_news_page(){
           "texto": post.texto,
           "imagem": post.imagem,
           "data_publicacao": now,
-          "likes": 0
+          "likes": 0,
+          "comentarios": []
 
         };
 

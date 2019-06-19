@@ -218,4 +218,9 @@ display: none;
  color: black;
  text-decoration: none;
  cursor: pointer;
-} 
+}
+
+
+.comment_author{
+    color: red;
+}
